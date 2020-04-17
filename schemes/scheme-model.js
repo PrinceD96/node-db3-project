@@ -4,11 +4,11 @@ const find = () => {
 	return db("schemes");
 };
 
-const findById = (id) => {
+const findById = id => {
 	return db("schemes").where({ id }).first();
 };
 
-const findSteps = (id) => {
+const findSteps = id => {
 	return db("steps")
 		.select(
 			"steps.id",
@@ -21,19 +21,19 @@ const findSteps = (id) => {
 		.orderBy("steps.step_number");
 };
 
-const add = (schemeData) => {
+const add = schemeData => {
 	return db("schemes").insert(schemeData);
 };
 
-const addStep = (step, scheme_id) => {
-	return db("steps").where({ id: scheme_id }).insert(step);
+const addStep = async (step, scheme_id) => {
+	await db("steps").insert({ ...step, scheme_id });
 };
 
 const update = (changes, id) => {
 	return db("schemes").where({ id }).update(changes);
 };
 
-const remove = (id) => {
+const remove = id => {
 	return db("schemes").where({ id }).del();
 };
 
